@@ -1,36 +1,31 @@
-class q5 {
-    public List<List<Integer>> fourSum(int[] a, int target) {
-        Arrays.sort(a);
-        List<List<Integer>> ans = new ArrayList<>();
+//leetcode 18.4sum
+import java.util.*;
 
-        for (int i = 0; i < a.length - 3; i++) {
-            if (i > 0 && a[i] == a[i - 1]) continue;
+class q5{
+    public List<List<Integer>> fourSum(int[] nums, int target) {
 
-            for (int j = i + 1; j < a.length - 2; j++) {
-                if (j > i + 1 && a[j] == a[j - 1]) continue;
+        Set<List<Integer>> set = new HashSet<>();
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                for (int k = j + 1; k < nums.length; k++) {
+                    for (int l = k + 1; l < nums.length; l++) {
+                        long sum = (long) nums[i] + nums[j] + nums[k] + nums[l];
+                        if (sum == target) {
+                            List<Integer> temp = new ArrayList<>();
+                            temp.add(nums[i]);
+                            temp.add(nums[j]);
+                            temp.add(nums[k]);
+                            temp.add(nums[l]);
 
-                int l = j + 1, r = a.length - 1;
+                            Collections.sort(temp);
 
-                while (l < r) {
-                    long s = (long)a[i] + a[j] + a[l] + a[r];
-
-                    if (s == target) {
-                        ans.add(Arrays.asList(a[i], a[j], a[l], a[r]));
-
-                        while (l < r && a[l] == a[l + 1]) l++;
-                        while (l < r && a[r] == a[r - 1]) r--;
-
-                        l++;
-                        r--;
-                    } else if (s < target) {
-                        l++;
-                    } else {
-                        r--;
+                            set.add(temp);
+                        }
                     }
                 }
             }
         }
 
-        return ans;
+        return new ArrayList<>(set);
     }
 }
